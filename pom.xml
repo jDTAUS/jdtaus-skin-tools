@@ -22,7 +22,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jdtaus.maven.skins</groupId>
   <artifactId>jdtaus-skin-tools</artifactId>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.0</version>
   <packaging>jar</packaging>
   <name>jDTAUS Skins ⁑ Skin Tools</name>
   <description>Skin tools for the Maven Site Plugin.</description>
@@ -57,9 +57,9 @@
   </issueManagement>
 
   <scm>
-    <connection>scm:svn:http://svn.jdtaus.org/svnroot/jdtaus/jdtaus-skins/jdtaus-skin-tools/trunk</connection>
-    <developerConnection>scm:svn:http://svn.jdtaus.org/svnroot/jdtaus/jdtaus-skins/jdtaus-skin-tools/trunk</developerConnection>
-    <url>http://svn.jdtaus.org/jdtaus-skins/jdtaus-skin-tools/trunk</url>
+    <connection>scm:svn:http://svn.jdtaus.org/svnroot/jdtaus/jdtaus-skins/jdtaus-skin-tools/tags/jdtaus-skin-tools-1.0</connection>
+    <developerConnection>scm:svn:http://svn.jdtaus.org/svnroot/jdtaus/jdtaus-skins/jdtaus-skin-tools/tags/jdtaus-skin-tools-1.0</developerConnection>
+    <url>http://svn.jdtaus.org/jdtaus-skins/jdtaus-skin-tools/tags/jdtaus-skin-tools-1.0</url>
   </scm>
 
   <build>
