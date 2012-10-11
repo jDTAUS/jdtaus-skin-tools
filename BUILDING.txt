@@ -1,0 +1,257 @@
+  $JDTAUS$
+
+  Build Requirements
+  ------------------
+
+  In order to build jDTAUS artifacts, the following software needs to be
+  installed.
+
+    o Java Development Kit (JDK), Version 1.6 or higher
+
+      Please consult the operating system documentation on how to install a Java
+      development kit.
+
+    o Apache Maven 3.x
+
+      The following link redirects to the official Apache Maven website.
+      http://www.jdtaus.org/redirect/mng
+
+  In order to build jDTAUS release artifacts, the following software needs to be
+  installed in addition.
+
+    o GnuPG
+
+      The following link redirects to the official GnuPG website.
+      http://www.jdtaus.org/redirect/gpg
+
+
+  Building Snapshot Artifacts
+  ---------------------------
+
+  For building snapshot artifacts, no further setup is required.
+
+  Artifact sources are compiled by executing:
+  cmd> mvn compile
+
+  Unit tests are run by executing:
+  cmd> mvn test
+
+  Snapshot archives are created by executing:
+  cmd> mvn package
+
+  Snapshot artifacts are installed by executing:
+  cmd> mvn install
+
+  The project site is build by executing:
+  cmd> mvn site
+
+  Building Release Artifacts
+  --------------------------
+
+    For building release artifacts, various properties need to be set. This is
+    done by using the '-D' command line option. To minimize the number of '-D'
+    options, a profile can be added to the local Maven settings.xml file. The
+    following link redirects to the official Maven settings reference.
+    http://www.jdtaus.org/redirect/msettings
+
+    <profile>
+      <id>jdtaus.org</id>
+      <properties>
+        <!--                                                                 -->
+        <!--                                                                 -->
+        <!-- Source Code Management System Properties                        -->
+        <!-- ========================================                        -->
+        <!--                                                                 -->
+        <!-- The 'jdtaus.scm.username' property must be set to the name of   -->
+        <!-- the user used for authentication with the project source code   -->
+        <!-- management system.                                              -->
+        <!--                                                                 -->
+        <jdtaus.scm.username>Username</jdtaus.scm.username>
+        <!--                                                                 -->
+        <!-- The 'jdtaus.scm.password' property must be set to the password  -->
+        <!-- used for authentication with the project source code management -->
+        <!-- system. To avoid storing cleartext passwords, this property     -->
+        <!-- should be set using the '-D' command line option.               -->
+        <!--                                                                 -->
+        <jdtaus.scm.password>Password</jdtaus.scm.password>
+        <!--                                                                 -->
+        <!--                                                                 -->
+        <!-- Code Signing Properties                                         -->
+        <!-- =======================                                         -->
+        <!--                                                                 -->
+        <!-- Code signing is backed by the 'maven-jarsigner-plugin'.         -->
+        <!-- The following link redirects to the official documentation of   -->
+        <!-- that plugin. http://www.jdtaus.org/redirect/mjarsigner  -->
+        <!--                                                                 -->
+        <!--                                                                 -->
+        <!-- The 'jarsigner.keystore' property may be set to the location of -->
+        <!-- the keystore used for signing Java archives.                    -->
+        <!--                                                                 -->
+        <!-- <jarsigner.keystore>Location</jarsigner.keystore>               -->
+        <!--                                                                 -->
+        <!-- The 'jarsigner.storepass' property may be set to the password   -->
+        <!-- of the keystore used for signing Java archives. To avoid        -->
+        <!-- storing cleartext passwords, this property should be set using  -->
+        <!-- the '-D' command line option.                                   -->
+        <!--                                                                 -->
+        <!-- <jarsigner.storepass>Password</jarsigner.storepass>             -->
+        <!--                                                                 -->
+        <!-- The 'jarsigner.alias' property must be set to the alias of the  -->
+        <!-- certificate used for signing Java archives.                     -->
+        <!--                                                                 -->
+        <jarsigner.alias>Alias</jarsigner.alias>
+        <!--                                                                 -->
+        <!-- The 'jarsigner.keypass' property may be set to the password of  -->
+        <!-- the certificate used for signing Java archives. To avoid        -->
+        <!-- storing cleartext passwords, this property should be set using  -->
+        <!-- the '-D' command line option.                                   -->
+        <!--                                                                 -->
+        <!-- <jarsigner.keypass>Password</jarsigner.keypass>                 -->
+        <!--                                                                 -->
+        <!-- The 'jarsigner.tsa' property must be set to an URL of a         -->
+        <!-- timestamping authority used for signing Java archives.          -->
+        <!--                                                                 -->
+        <!-- For example:                                                    -->
+        <!--    https://timestamp.geotrust.com/tsa                           -->
+        <!--                                                                 -->
+        <jarsigner.tsa>URL</jarsigner.tsa>
+        <!--                                                                 -->
+        <!--                                                                 -->
+        <!-- Artifact Signing Properties                                     -->
+        <!-- ===========================                                     -->
+        <!--                                                                 -->
+        <!-- Artifact signing is backed by the 'maven-gpg-plugin'.           -->
+        <!-- The following link redirects to the official documentation of   -->
+        <!-- that plugin. http://www.jdtaus.org/redirect/mgpg        -->
+        <!--                                                                 -->
+        <!--                                                                 -->
+        <!-- The 'gpg.keyname' property may be set to the name of the GPG    -->
+        <!-- key used for signing artifacts.                                 -->
+        <!--                                                                 -->
+        <!-- <gpg.keyname>Key</gpg.keyname>                                  -->
+        <!--                                                                 -->
+        <!-- The 'gpg.passphrase' property may be set to the passphrase of   -->
+        <!-- the GPG key used for signing artifacts. To avoid storing        -->
+        <!-- cleartext passwords, this property should be set using the '-D' -->
+        <!-- command line option.                                            -->
+        <!--                                                                 -->
+        <!-- <gpg.passphrase>Passphrase</gpg.passphrase>                     -->
+        <!--                                                                 -->
+        <!--                                                                 -->
+      </properties>
+    </profile>
+
+    That profile is enabled by using the '-P' command line option.
+
+    Release archives are created by executing:
+    cmd> mvn -Pjdtaus-release,jdtaus.org verify
+
+    Release artifacts are installed by executing:
+    cmd> mvn -Pjdtaus-release,jdtaus.org install
+
+
+  Deploying Snapshot Artifacts
+  ----------------------------
+
+    Snapshot artifacts are deployed by executing:
+    cmd> mvn deploy
+
+    For this to work, a server definition needs to be specified in the local
+    Maven settings.xml file used for authentication with the remote snapshot
+    repository.
+
+    <server>
+      <id>sonatype-nexus-snapshots</id>
+      <username>OSS Username</username>
+      <password>OSS Password</password>
+    </server>
+
+    Optionally, to use deployed snapshot artifacts, a corresponding profile
+    may be added to the local Maven settings.xml file.
+
+    <profile>
+      <id>oss.sonatype.org</id>
+      <repositories>
+        <repository>
+          <id>sonatype-nexus-snapshots</id>
+          <name>Sonatype Nexus Snapshots</name>
+          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+          <releases>
+            <enabled>false</enabled>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+        </repository>
+      </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+          <id>sonatype-nexus-snapshots</id>
+          <name>Sonatype Nexus Snapshots</name>
+          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+          <releases>
+            <enabled>false</enabled>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+
+    That profile is enabled by using the '-P' command line option.
+    For example:
+
+    cmd> mvn -Poss.sonatype.org compile
+    cmd> mvn -Poss.sonatype.org test
+    cmd> mvn -Poss.sonatype.org package
+    cmd> mvn -Poss.sonatype.org install
+    cmd> mvn -Poss.sonatype.org site
+
+    The following link redirects to the repository hosting service used by this
+    project. http://www.jdtaus.org/redirect/oss
+
+  Deploying Release Artifacts
+  ---------------------------
+
+    For deploying release artifacts, a server definition needs to be specified
+    in the local Maven settings.xml file used for authentication with the remote
+    staging repository.
+
+    <server>
+      <id>sonatype-nexus-staging</id>
+      <username>OSS Username</username>
+      <password>OSS Password</password>
+    </server>
+
+    Release artifacts are deployed by executing:
+    cmd> mvn -Pjdtaus-release,jdtaus.org deploy
+
+  Project Site Deployment
+  -----------------------
+
+    For deploying the project web site, a server definition needs to be
+    specified in the local Maven settings.xml file used for authentication with
+    the project web server.
+
+    <server>
+      <id>jdtaus.org</id>
+      <username>Username</username>
+      <password>Password</password>
+    </server>
+
+    The project web site is deployed by executing:
+    cmd> mvn site-deploy
+
+  Releasing Artifacts
+  -------------------
+
+    The release process is backed by the 'maven-release-plugin'. The following
+    link redirects to the official documentation of that plugin.
+    http://www.jdtaus.org/redirect/mrelease
+
+    Releases are prepared by executing:
+    cmd> mvn release:prepare -Pjdtaus-release,jdtaus.org
+
+    Releases are performed by executing:
+    cmd> mvn release:perform -Darguments="-Pjdtaus-release,jdtaus.org"
