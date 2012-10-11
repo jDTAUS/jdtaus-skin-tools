@@ -100,6 +100,41 @@
                   </reportSet>
                 </reportSets>
               </reportPlugin>
+              <reportPlugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <reportSets>
+                  <reportSet>
+                    <id>default-javadoc</id>
+                    <reports>
+                      <report>javadoc</report>
+                    </reports>
+                  </reportSet>
+                  <reportSet>
+                    <id>default-test-javadoc</id>
+                    <reports>
+                      <report>test-javadoc</report>
+                    </reports>
+                  </reportSet>
+                </reportSets>
+                <configuration>
+                  <quiet>true</quiet>
+                  <top><![CDATA[<script type="text/javascript">var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-416120-1']); _gaq.push(['_setDomainName', 'jdtaus.org']); _gaq.push(['_setAllowLinker', true]); _gaq.push(['_trackPageview']); (function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })();</script>]]></top>
+                  <breakiterator>true</breakiterator>
+                  <keywords>true</keywords>
+                  <linksource>true</linksource>
+                  <serialwarn>true</serialwarn>
+                  <source>${maven.compiler.source}</source>
+                  <doctitle>${project.name} ${project.version}</doctitle>
+                  <testDoctitle>${project.name} Tests ${project.version}</testDoctitle>
+                  <windowtitle>${project.name} ${project.version}</windowtitle>
+                  <testWindowtitle>${project.name} Tests ${project.version}</testWindowtitle>
+                  <detectOfflineLinks>false</detectOfflineLinks>
+                  <detectLinks>true</detectLinks>
+                  <validateLinks>true</validateLinks>
+                  <additionalJOption>${maven.javadoc.additionalJOption}</additionalJOption>
+                </configuration>
+              </reportPlugin>
             </reportPlugins>
             <archive>
               <index>true</index>
@@ -184,6 +219,37 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>2.5.1</version> <!-- See http://jira.codehaus.org/browse/MPIR-238 -->
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>2.9</version>
+          <configuration>
+            <quiet>true</quiet>
+            <top><![CDATA[<script type="text/javascript">var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-416120-1']); _gaq.push(['_setDomainName', 'jdtaus.org']); _gaq.push(['_setAllowLinker', true]); _gaq.push(['_trackPageview']); (function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })();</script>]]></top>
+            <breakiterator>true</breakiterator>
+            <keywords>true</keywords>
+            <linksource>true</linksource>
+            <serialwarn>true</serialwarn>
+            <source>${maven.compiler.source}</source>
+            <doctitle>${project.name} ${project.version}</doctitle>
+            <testDoctitle>${project.name} Tests ${project.version}</testDoctitle>
+            <windowtitle>${project.name} ${project.version}</windowtitle>
+            <testWindowtitle>${project.name} Tests ${project.version}</testWindowtitle>
+            <detectOfflineLinks>false</detectOfflineLinks>
+            <detectLinks>true</detectLinks>
+            <validateLinks>true</validateLinks>
+            <additionalJOption>${maven.javadoc.additionalJOption}</additionalJOption>
+            <archive>
+              <index>true</index>
+              <addMavenDescriptor>false</addMavenDescriptor>
+              <compress>true</compress>
+              <manifestEntries>
+                <Build-Date>${build.date}</Build-Date>
+                <Maven-Version>${maven.version}</Maven-Version>
+              </manifestEntries>
+            </archive>
+          </configuration>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
@@ -389,6 +455,26 @@
             </plugin>
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-javadoc-plugin</artifactId>
+              <executions>
+                <execution>
+                  <id>default-jar</id>
+                  <phase>prepare-package</phase>
+                  <goals>
+                    <goal>jar</goal>
+                  </goals>
+                </execution>
+                <execution>
+                  <id>default-test-jar</id>
+                  <phase>prepare-package</phase>
+                  <goals>
+                    <goal>test-jar</goal>
+                  </goals>
+                </execution>
+              </executions>
+            </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-jar-plugin</artifactId>
               <executions>
                 <execution>
@@ -498,6 +584,7 @@
     <maven.compiler.source>1.5</maven.compiler.source>
     <maven.compiler.target>1.5</maven.compiler.target>
     <maven.site.relativizeDecorationLinks>false</maven.site.relativizeDecorationLinks>
+    <maven.javadoc.additionalJOption>-J-client -J-Xms256m -J-Xmx256m -J-Dfile.encoding=${file.encoding}</maven.javadoc.additionalJOption>
     <jdtaus.trac.query>order=id&amp;version=${project.version}&amp;component=${project.name}</jdtaus.trac.query>
     <!-- Dependency versions. -->
     <wagon.version>2.2</wagon.version>
